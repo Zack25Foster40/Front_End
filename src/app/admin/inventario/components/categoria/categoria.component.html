@@ -1,0 +1,48 @@
+<div class="artemania-categorias">
+    <h1 style="text-align: center; font-family: 'Roboto', sans-serif; color: #333;">Gestión de Categorías - Artemania</h1>
+    
+    <!-- Botón Agregar Categoría -->
+    <div style="display: flex; justify-content: center; margin: 1rem 0;">
+        <button pButton (click)="mostrarDialogo()" class="p-button-raised p-button-rounded p-button-primary">
+            <i class="pi pi-plus"></i> Nueva Categoría
+        </button>
+    </div>
+
+    <!-- Grid de Categorías -->
+    <div class="categorias-grid" style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center;">
+        <div *ngFor="let categoria of categorias" class="categoria-card" style="width: 300px; border: 1px solid #ddd; border-radius: 8px; padding: 1rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+            <h2 style="font-size: 1.5rem; color: #5a5a5a; text-align: center;">{{categoria.nombre}}</h2>
+            <p style="text-align: center; color: #777; font-size: 1rem;">{{categoria.detalle}}</p>
+            <div style="display: flex; justify-content: space-around; margin-top: 1rem;">
+                <button pButton icon="pi pi-pencil" class="p-button-rounded p-button-success"
+                    (click)="editarCategoria(categoria)"></button>
+                <button pButton icon="pi pi-trash" class="p-button-rounded p-button-danger"
+                    (click)="eliminarCategoria(categoria)"></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dialog -->
+    <p-dialog header="Gestión de Categoría" [(visible)]="dialog_visible" [modal]="true"
+        [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" [style]="{ width: '40vw' }" [draggable]="false"
+        [resizable]="false" class="p-fluid">
+        <form [formGroup]="categoriaForm">
+            <div class="field">
+                <label for="name">Nombre</label>
+                <input type="text" pInputText id="name" required autofocus formControlName="nombre" />
+                <small class="ng-dirty ng-invalid">El nombre es obligatorio.</small>
+            </div>
+
+            <div class="field">
+                <label for="det">Detalle</label>
+                <input type="text" pInputText id="det" required formControlName="detalle" />
+            </div>
+        </form>
+        <ng-template pTemplate="footer">
+            <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text"
+                (click)="dialog_visible=false"></button>
+            <button pButton pRipple label="Guardar" icon="pi pi-check" class="p-button-primary"
+                (click)="guardarCategoria()"></button>
+        </ng-template>
+    </p-dialog>
+</div>
